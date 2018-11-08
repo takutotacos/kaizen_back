@@ -30,12 +30,14 @@ let labelRouter = require('./routes/labels');
 let sprintRouter = require('./routes/sprints');
 let ticketRouter = require('./routes/tickets');
 let commentRouter = require('./routes/comments');
+let goalWeeklyRouter = require('./routes/goal_weekly');
 
 app.use('/users', usersRouter);
 app.use('/labels', labelRouter);
 app.use('/sprints', sprintRouter);
 app.use('/tickets', ticketRouter);
 ticketRouter.use('/:ticket_id/comments', commentRouter);
+app.use('/goal_weekly', goalWeeklyRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
