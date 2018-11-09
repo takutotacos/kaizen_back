@@ -27,13 +27,10 @@ router.get('/:year/:month', (req, res) => {
     }
 
     let weeks = {};
-    goals.forEach((e) => {
-      if (weeks[e.week] === undefined ) {
-        weeks[e.week] = [];
-      }
-      weeks[e.week].push(e)
-    })
-
+    for (let i = 0; i < 5; i++) {
+      weeks[i + 1] = [];
+    }
+    goals.forEach((e) => weeks[e.week].push(e));
     res.json(weeks);
   })
 });
@@ -63,9 +60,9 @@ router.post('/', (req, res) => {
 router.patch('/:id', (req, res) => {
   let target = {_id: req.params.id};
   let update = {
-    completed: true
-  }
-  GoalWeekly.findOneAndUpdate(target, update, (error, response) => {
+    completed: req.body['completed']
+  };
+  GoalWeekly.findOneAndUpdate(target, update, {new: true}, (error, response) => {
     if (error != undefined) {
       return res.status(422).json({errors: error.errorMessage})
     }
