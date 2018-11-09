@@ -26,7 +26,15 @@ router.get('/:year/:month', (req, res) => {
       goals = [];
     }
 
-    res.json(goals);
+    let weeks = {};
+    goals.forEach((e) => {
+      if (weeks[e.week] === undefined ) {
+        weeks[e.week] = [];
+      }
+      weeks[e.week].push(e)
+    })
+
+    res.json(weeks);
   })
 });
 
