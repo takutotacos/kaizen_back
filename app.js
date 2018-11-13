@@ -1,4 +1,5 @@
 require('dotenv').config();
+let helmet = require('helmet');
 let createError = require('http-errors');
 let express = require('express');
 let bodyParser = require('body-parser');
@@ -6,10 +7,12 @@ let cors = require('cors');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let mongoose = require('mongoose');
+let config = require('config');
 let port = 4200;
 
 mongoose.Promise = require('bluebird');
-mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:27017/kaizen`)
+let mongoDB = process.env.MONGODB_URI || `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:27017/kaizen`;
+mongoose.connect(mongoDB)
     .then(() => {
         console.log('Connected to db');
     })
@@ -18,6 +21,7 @@ mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${proc
     });
 
 let app = express();
+app.use(helmet());
 app.use(express.static('public'));
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
