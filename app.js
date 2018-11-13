@@ -11,11 +11,9 @@ let port = 4200;
 
 mongoose.Promise = require('bluebird');
 if (process.env.MONGODB_URI) {
-  let mongoDB = process.env.MONGODB_URI + '?authSource=admin';
+  let mongoDB = process.env.MONGODB_URI;
   console.log('-------------------------------');
-  console.log(mongoDB);
-  console.log('-------------------------------');
-  mongoose.connect(mongoDB)
+  mongoose.connect(mongoDB, { auth: { authdb: "admin" }} )
     .then(() => {
       console.log('Connected to db');
     })
