@@ -10,15 +10,26 @@ let mongoose = require('mongoose');
 let port = 4200;
 
 mongoose.Promise = require('bluebird');
-let mongoDB = process.env.MONGODB_URI || `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:27017/kaizen`;
-mongoose.connect(mongoDB)
+if (process.env.MONGODB_URI) {
+  let monogoDB = process.env.MONGODB_URI;
+  mongoose.connect(mongoDB, { auth: { authdb: "admin" }} )
     .then(() => {
-        console.log('Connected to db');
+      console.log('Connected to db');
     })
     .catch(err => {
-        console.log('APp connecting to db error: ' + err.stack);
+      console.log('APp connecting to db error: ' + err.stack);
     });
 
+} else {
+  let mongoDB = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:27017/kaizen`;
+  mongoose.connect(mongoDB, { auth: { authdb: "admin" }} )
+    .then(() => {
+      console.log('Connected to db');
+    })
+    .catch(err => {
+      console.log('APp connecting to db error: ' + err.stack);
+    });
+}
 let app = express();
 app.use(helmet());
 app.use(express.static('public'));
