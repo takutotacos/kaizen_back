@@ -7,7 +7,6 @@ let cors = require('cors');
 let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let mongoose = require('mongoose');
-let config = require('config');
 let port = 4200;
 
 mongoose.Promise = require('bluebird');
