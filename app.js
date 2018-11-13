@@ -13,7 +13,8 @@ mongoose.Promise = require('bluebird');
 if (process.env.MONGODB_URI) {
   let mongoDB = process.env.MONGODB_URI;
   console.log('-------------------------------');
-  mongoose.connect(mongoDB, { auth: { authdb: "admin" }} )
+  //mongoose.connect(mongoDB, { auth: { authdb: "admin" }} )
+  mongoose.connect(mongoDB, { useMongoClient: true})
     .then(() => {
       console.log('Connected to db');
     })
