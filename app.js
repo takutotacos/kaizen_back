@@ -12,6 +12,9 @@ let port = 4200;
 mongoose.Promise = require('bluebird');
 if (process.env.MONGODB_URI) {
   let mongoDB = process.env.MONGODB_URI;
+  console.log('-------------------------------');
+  console.log(mongoDB);
+  console.log('-------------------------------');
   mongoose.connect(mongoDB, { auth: { authdb: "admin" }} )
     .then(() => {
       console.log('Connected to db');
@@ -21,8 +24,9 @@ if (process.env.MONGODB_URI) {
     });
 
 } else {
-  let mongoDB = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:27017/kaizen`;
-  mongoose.connect(mongoDB, { auth: { authdb: "admin" }} )
+  //let mongoDB = `mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:27017/kaizen`;
+  let mongoDB = 'mongodb://takutotacos:11305Tacos!@ds037778.mlab.com:37778/heroku_xw43j63w';
+  mongoose.connect(mongoDB)
     .then(() => {
       console.log('Connected to db');
     })
