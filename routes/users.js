@@ -2,6 +2,7 @@ let User = require('../models/User');
 let express = require('express');
 let router = express.Router();
 const bcrypt = require('bcrypt');
+
 const saltRoudns = 10;
 
 /* POST user creation */
