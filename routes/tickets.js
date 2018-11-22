@@ -4,6 +4,7 @@ let router = express.Router();
 
 /* GET ticket listing */
 router.get('/', (req, res) => {
+  console.log('the request came to the server');
   Ticket.find((err, tickets) => {
     if (err) {
       console.log('error fetching tickets');

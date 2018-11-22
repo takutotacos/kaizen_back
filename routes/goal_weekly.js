@@ -57,12 +57,12 @@ router.post('/', (req, res) => {
 })
 
 /* PATCH update weekly goal */
-router.patch('/:id', (req, res) => {
+router.patch('/:id', function(req, res) {
   let target = {_id: req.params.id};
   let update = {
     completed: req.body['completed']
   };
-  GoalWeekly.findOneAndUpdate(target, update, {new: true}, (error, response) => {
+  return GoalWeekly.findOneAndUpdate(target, update, {new: true}, (error, response) => {
     if (error != undefined) {
       return res.status(422).json({errors: error.errorMessage})
     }
