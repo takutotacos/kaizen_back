@@ -10,8 +10,13 @@ let mongoose = require('mongoose');
 let port = 4200;
 
 mongoose.Promise = require('bluebird');
+console.log(process.env.NODE_ENV);
+let mongoDb = process.env.NODE_ENV === 'production'
+  ? process.env.DB_URI
+  : "mongodb://database/kaizen";
+
 mongoose
-  .connect("mongodb://database/kaizen")
+  .connect(mongoDb)
   .then(() => console.log('Connected to db'))
   .catch(err => console.log('APp connecting to db error: ' + err.stack));
 

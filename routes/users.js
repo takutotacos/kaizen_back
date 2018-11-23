@@ -34,7 +34,7 @@ router.post('/login', (req, response) => {
                 return response.status(401).json({errors: 'Authentication Failed'});
             }
 
-            return response.status(200).json(user);
+            return response.status(200).json({user: user});
         })
     })
 });
