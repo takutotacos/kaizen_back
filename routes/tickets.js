@@ -4,8 +4,12 @@ let router = express.Router();
 
 /* GET ticket listing */
 router.get('/', (req, res) => {
+  let params = {
+    owner: req.user.id
+  }
+
   console.log('the request came to the server');
-  Ticket.find((err, tickets) => {
+  Ticket.find(params, (err, tickets) => {
     if (err) {
       console.log('error fetching tickets');
       tickets = [];
@@ -27,7 +31,7 @@ router.post('/', (req, res) => {
     urgency: requestValue(req, 'urgency'),
     lasting_effect: requestValue(req, 'lasting_effect'),
     labels: requestValue(req, 'label_id'),
-    owner: requestValue(req, 'owner_id'),
+    owner: req.user.id
   };
 
   // update existing

@@ -4,7 +4,11 @@ let router = express.Router();
 
 /* GET goal_weekly listing */
 router.get('/', (req, res) => {
-  GoalWeekly.find((err, goals) => {
+  let params = {
+    user: req.user.id
+  }
+
+  GoalWeekly.find(params, (err, goals) => {
     if (err) {
       console.log('error fetching goal_weeklies');
       goals = [];
@@ -16,10 +20,12 @@ router.get('/', (req, res) => {
 
 /* GET goal_weekly listing for a particular month */
 router.get('/:year/:month', (req, res) => {
-  params = {
+  let params = {
     year: req.params.year,
-    month: req.params.month
+    month: req.params.month,
+    user: req.user.id
   };
+
   GoalWeekly.find(params, (err, goals) => {
     if (err) {
       console.log('error fetching goal_weeklies');
@@ -42,7 +48,7 @@ router.post('/', (req, res) => {
     month: req.body['month'],
     week: req.body['week'],
     content: req.body['content'],
-    user: req.body['user_id'],
+    user: req.user.id
   });
 
   let error = goal.validateSync();
