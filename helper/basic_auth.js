@@ -4,6 +4,9 @@ const bcrypt = require('bcrypt');
 module.exports = basicAuth;
 
 async function basicAuth(req, res, next) {
+  console.log('DEBUG: ' + req.headers);
+  console.log('DEBUG: ' + req.body);
+
   // make login path public
   if (req.path === '/users' || req.path === '/users/login') {
     return next();
@@ -20,14 +23,13 @@ async function basicAuth(req, res, next) {
     return res.status(401).json({message: 'Invalid Authentication Credentials'});
   }
 
+  // userRouter.login
   User.findOne({email: email}, (err, user) => {
-    bcrypt.compare(password, user.password, (err, res) => {
-      if (err || !res) {
-        return res.status(401).json({message: 'Invalid Authentication Credentials'});
-      }
+    if (password !== user.password) {
+      return res.status(401).json({message: 'Invalid Authentication Credentials'});
+    }
 
-      req.user = user;
-      next();
-    })
+    req.user = user;
+    next();
   });
 }

@@ -28,15 +28,15 @@ router.post('/', (req, res) => {
 })
 
 router.post('/login', (req, response) => {
-    User.findOne({email: req.body['email']}, (err, user) => {
-        bcrypt.compare(req.body['password'], user.password, (err, res) => {
-            if (err || !res) {
-                return response.status(401).json({errors: 'Authentication Failed'});
-            }
+  User.findOne({email: req.body['email']}, (err, user) => {
+    bcrypt.compare(req.body['password'], user.password, (err, res) => {
+      if (err || !res) {
+        return response.status(401).json({errors: 'Authentication Failed'});
+      }
 
-            return response.status(200).json({user: user});
-        })
+      return response.status(200).json({user: user});
     })
+  })
 });
 
 module.exports = router;

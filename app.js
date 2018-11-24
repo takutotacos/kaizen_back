@@ -9,18 +9,18 @@ let logger = require('morgan');
 let mongoose = require('mongoose');
 let port = 4200;
 const basicAuth = require('./helper/basic_auth');
-const errorHandler = require('./helper/error-handler');
 
+mongoose.connect(`mongodb://${process.env.DB_USER}:${process.env.DB_PASS}@${process.env.DB_HOST}:27017/kaizen`)
 mongoose.Promise = require('bluebird');
 console.log(process.env.NODE_ENV);
 let mongoDb = process.env.NODE_ENV === 'production'
   ? process.env.DB_URI
   : "mongodb://database/kaizen";
 
-mongoose
-  .connect(mongoDb)
-  .then(() => console.log('Connected to db'))
-  .catch(err => console.log('APp connecting to db error: ' + err.stack));
+// mongoose
+//   .connect(mongoDb)
+//   .then(() => console.log('Connected to db'))
+//   .catch(err => console.log('APp connecting to db error: ' + err.stack));
 
 let app = express();
 app.use(helmet());

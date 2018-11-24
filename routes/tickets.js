@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
 
 /* POST ticket creation */
 router.post('/', (req, res) => {
+  console.log('DEBUG: ' + req);
   let params = {
     title: requestValue(req, 'title'),
     description: requestValue(req, 'description'),
