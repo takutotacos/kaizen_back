@@ -8,6 +8,8 @@ let cookieParser = require('cookie-parser');
 let logger = require('morgan');
 let mongoose = require('mongoose');
 let port = 4200;
+const basicAuth = require('./helper/basic_auth');
+const errorHandler = require('./helper/error-handler');
 
 mongoose.Promise = require('bluebird');
 console.log(process.env.NODE_ENV);
@@ -28,6 +30,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(logger('dev'));
+app.use(basicAuth);
 
 let usersRouter = require('./routes/users');
 let labelRouter = require('./routes/labels');

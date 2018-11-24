@@ -1,7 +1,7 @@
 let User = require('../models/User');
+const bcrypt = require('bcrypt');
 let express = require('express');
 let router = express.Router();
-const bcrypt = require('bcrypt');
 
 const saltRoudns = 10;
 
@@ -15,7 +15,7 @@ router.post('/', (req, res) => {
         });
 
         let error = newUser.validateSync();
-        if (error != undefined) {
+        if (error !== undefined) {
             return res.status(422).json({errors: error.message})
         }
 
@@ -38,6 +38,5 @@ router.post('/login', (req, response) => {
         })
     })
 });
-
 
 module.exports = router;
