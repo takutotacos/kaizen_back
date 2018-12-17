@@ -21,7 +21,7 @@ router.post('/', (req, res) => {
 
         newUser
             .save()
-            .then(user => res.json(user))
+            .then(user => res.json({user: user}))
             // todo email unique error should be more expressive!!!!
             .catch(error => res.status(422).send(error.errorMessage));
     });
