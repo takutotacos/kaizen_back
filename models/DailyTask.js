@@ -11,7 +11,8 @@ let DailyTask = Schema({
   time_spent: Date,
   completed: Boolean,
   user: {type: Schema.Types.ObjectId, ref: 'user'},
-  ticket: {type: Schema.Types.ObjectId, ref: 'ticket'}
+  ticket: {type: Schema.Types.ObjectId, ref: 'ticket'},
+  ticket_title: String
 })
 
 module.exports = mongoose.model('daily_tasks', DailyTask);

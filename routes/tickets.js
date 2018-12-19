@@ -60,6 +60,32 @@ router.post('/', (req, res) => {
     .catch(error => res.status(422).send(error.errorMessage));
 });
 
+/* POST ticket creation */
+router.patch('/', (req, res) => {
+  console.log('DEBUG: ' + req);
+  let params = {
+    title: requestValue(req, 'title'),
+    description: requestValue(req, 'description'),
+    time: requestValue(req, 'time'),
+    status: requestValue(req, 'status'),
+    importance: requestValue(req, 'importance'),
+    urgency: requestValue(req, 'urgency'),
+    lasting_effect: requestValue(req, 'lasting_effect'),
+    labels: requestValue(req, 'label_id'),
+    owner: req.user.id
+  };
+
+  // update existing
+  Ticket.findOneAndUpdate({_id: requestValue(req, 'id')}, params, {upsert: true, new: true}, (err, raw) => {
+    if (err) {
+      res.status(422).send(err.errorMessage);
+      return;
+    }
+
+    res.json(raw);
+  });
+});
+
 let enumValues = (value) => {
   return Ticket.schema.path(`ticket.${value}`).enumValues;
 };

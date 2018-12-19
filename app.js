@@ -1,17 +1,19 @@
 require('dotenv').config();
+let log4js = require('log4js');
+let logger = log4js.getLogger();
+logger.level = 'debug';
 let helmet = require('helmet');
 let createError = require('http-errors');
 let express = require('express');
 let bodyParser = require('body-parser');
 let cors = require('cors');
 let cookieParser = require('cookie-parser');
-let logger = require('morgan');
 let mongoose = require('mongoose');
 let port = 4200;
 const basicAuth = require('./helper/basic_auth');
 
 mongoose.Promise = require('bluebird');
-console.log(process.env.NODE_ENV);
+logger.debug(process.env.NODE_ENV);
 let mongoDb = process.env.NODE_ENV === 'production'
   ? process.env.DB_URI
   : "mongodb://database/kaizen";
