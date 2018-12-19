@@ -86,6 +86,23 @@ router.patch('/', (req, res) => {
   });
 });
 
+router.delete('/:id', (req, res) => {
+  console.log('DEBUG: ' + req);
+
+  let param = {
+    _id: req.params.id,
+  };
+
+  Ticket.deleteOne(param, (err) => {
+    if (err) {
+      res.status(404).send(err.errorMessage);
+      return;
+    }
+
+    res.status(202).send();
+  })
+})
+
 let enumValues = (value) => {
   return Ticket.schema.path(`ticket.${value}`).enumValues;
 };
